@@ -3,33 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#1a1a1a"> <title>Borsa Makine</title>
+    <meta name="theme-color" content="#1a1a1a">
+    <title>Borsa Makine</title>
     <style>
         * { touch-action: manipulation; box-sizing: border-box; }
         body { 
-            font-family: 'Segoe UI', sans-serif; 
-            display: flex; justify-content: center; align-items: center; 
-            height: 100vh; margin: 0; background-color: #1a1a1a; color: white;
+            font-family: sans-serif; 
+            display: flex; flex-direction: column;
+            justify-content: flex-start; align-items: center; 
+            height: 100vh; margin: 0; background-color: #1a1a1a;
+            padding-top: 20px; /* Üstten biraz boşluk */
         }
-        .calc { background: #1a1a1a; padding: 20px; border-radius: 20px; width: 100%; max-width: 350px; }
+        .calc { 
+            background: #1a1a1a; width: 100%; max-width: 400px; 
+            padding: 10px; display: flex; flex-direction: column; height: 95vh;
+        }
         #display { 
-            width: 100%; height: 80px; font-size: 40px; text-align: right; 
-            margin-bottom: 20px; background: #000; color: #4285f4; 
-            border: 1px solid #333; border-radius: 12px; padding: 15px;
+            width: 100%; height: 100px; font-size: 50px; text-align: right; 
+            margin-bottom: 15px; background: #000; color: #4285f4; 
+            border: 1px solid #333; border-radius: 15px; padding: 20px;
         }
-        .buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+        .buttons { 
+            display: grid; grid-template-columns: repeat(4, 1fr); 
+            gap: 10px; flex-grow: 1; /* Butonların ekranın kalanını doldurmasını sağlar */
+        }
         button { 
-            padding: 20px 0; font-size: 22px; border: none; border-radius: 15px; 
-            cursor: pointer; background: #333; color: white; font-weight: bold;
+            width: 100%; height: 100%; font-size: 24px; border: none; 
+            border-radius: 15px; cursor: pointer; background: #333; 
+            color: white; font-weight: bold;
         }
         button:active { background: #555; transform: scale(0.95); }
         .op { background: #4285f4; } 
-        .eq { background: #34a853; grid-column: span 2; border-radius: 15px; }
-        .clear { background: #ea4335; grid-column: span 2; border-radius: 15px; }
+        .eq { background: #34a853; grid-column: span 2; }
+        .clear { background: #ea4335; grid-column: span 2; }
     </style>
 </head>
 <body>
@@ -40,4 +46,21 @@
             <button class="op" onclick="del()">←</button>
             <button class="op" onclick="ins('/')">÷</button>
             <button onclick="ins('7')">7</button><button onclick="ins('8')">8</button><button onclick="ins('9')">9</button>
-            <button class="op" onclick="ins('*')">×</
+            <button class="op" onclick="ins('*')">×</button>
+            <button onclick="ins('4')">4</button><button onclick="ins('5')">5</button><button onclick="ins('6')">6</button>
+            <button class="op" onclick="ins('-')">-</button>
+            <button onclick="ins('1')">1</button><button onclick="ins('2')">2</button><button onclick="ins('3')">3</button>
+            <button class="op" onclick="ins('+')">+</button>
+            <button onclick="ins('0')">0</button><button onclick="ins('.')">,</button>
+            <button class="eq" onclick="calc()">=</button>
+        </div>
+    </div>
+    <script>
+        let d = document.getElementById('display');
+        function ins(v) { d.value = (d.value === '0' ? v : d.value + v); }
+        function clr() { d.value = ''; }
+        function del() { d.value = d.value.slice(0, -1); }
+        function calc() { try { d.value = eval(d.value.replace('×','*').replace('÷','/')); } catch { d.value = 'Hata'; } }
+    </script>
+</body>
+</html>
